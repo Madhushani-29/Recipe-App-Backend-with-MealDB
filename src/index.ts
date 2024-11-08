@@ -24,7 +24,7 @@ app.get("/health", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Health is ok" });
 });
 
-// app.use("/api/my/user", UserRoutes);
+ app.use("/api/user", UserRoutes);
 // app.use("/api/my/restaurant", MyRestaurantRoutes);
 // app.use("/api/restaurant", RestaurantRoutes);
 // app.use("/api/order", OrderRoutes);
