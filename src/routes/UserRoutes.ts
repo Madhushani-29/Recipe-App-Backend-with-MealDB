@@ -1,22 +1,15 @@
 import express from "express";
 import UserController from "../controller/UserController";
-import { jwtCheck, jwtParse } from "../middleware/auth";
 import { validateUserRequest } from "../middleware/validation";
+import validateToken from "../middleware/auth";
 
 const router = express.Router();
 
 router.post("/register", validateUserRequest, UserController.registerUser);
 
-// router.get("/", jwtCheck, jwtParse, UserController.getCurrentUser);
+router.post("/log-in", validateUserRequest, UserController.loginUser);
 
-// router.post("/", jwtCheck, UserController.createCurrentUser);
-
-// router.put(
-//   "/",
-//   jwtCheck,
-//   jwtParse,
-//   validateMyUserRequest,
-//   UserController.updateCurrentUser
-// );
+// use to test authentication works properly
+router.get("/current", validateToken, UserController.getCurrentUser);
 
 export default router;
