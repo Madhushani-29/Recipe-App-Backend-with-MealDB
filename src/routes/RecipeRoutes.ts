@@ -20,4 +20,9 @@ router.patch(
   RecipeController.removeFavouriteRecipes
 );
 
+router.get(
+  "/recipe/:recipeId",
+  validateToken,
+  RecipeController.getSingleRecipe
+);
 export default router;
