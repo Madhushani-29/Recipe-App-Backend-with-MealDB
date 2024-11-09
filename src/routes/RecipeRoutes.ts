@@ -6,15 +6,18 @@ import { param } from "express-validator";
 
 const router = express.Router();
 
-router.get(
-  "/:category",
-  param("category")
-    .isString()
-    .trim()
-    .notEmpty()
-    .withMessage("Category must be a valid string!"),
+router.get("/favourites", validateToken, RecipeController.getFavouriteRecipes);
+
+router.patch(
+  "/favourites/add",
   validateToken,
-  RecipeController.getRecipesByCategory
+  RecipeController.addFavouriteRecipes
+);
+
+router.patch(
+  "/favourites/remove",
+  validateToken,
+  RecipeController.removeFavouriteRecipes
 );
 
 export default router;

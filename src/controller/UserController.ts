@@ -3,6 +3,7 @@ import User from "../models/user";
 import bcrypt from "bcrypt";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
+import Favourites from "../models/favourites";
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -17,6 +18,11 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const createdUser = await User.create({ email, password: hashedPassword });
 
   if (createdUser) {
+    await Favourites.create({
+      userId: createdUser._id,
+      favourites: [],
+    });
+
     res.status(201).json({
       message: "User registered successfully",
     });

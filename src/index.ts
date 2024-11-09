@@ -3,8 +3,8 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/dbConnection";
 import UserRoutes from "./routes/UserRoutes";
-import CategoryRoutes from "./routes/CategoryRoutes";
 import RecipeRoutes from "./routes/RecipeRoutes";
+import CategoryRoutes from "./routes/CategoryRoutes";
 
 //create app
 const app = express();

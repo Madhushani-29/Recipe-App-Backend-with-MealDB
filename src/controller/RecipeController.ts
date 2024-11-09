@@ -1,24 +1,48 @@
 import axios from "axios";
 import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import Favourites from "../models/favourites";
 
-const getRecipesByCategory = async (req: Request, res: Response) => {
-  const { category } = req.params;
+const getFavouriteRecipes = async (req: Request, res: Response) => {
+  res.status(200).json({ message: "Favourite recipes." });
+};
 
-  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+const addFavouriteRecipes = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const { recipeId } = req.body;
+    const userId = req.userID;
 
-  const response = await axios.get(url);
+    const favourite = await Favourites.findOne({ userId });
 
-  const recipes = response.data.meals;
+    if (!favourite) {
+      res.status(404).json({
+        message: "User's favourites not found",
+      });
+      return;
+    }
 
-  if (recipes) {
-    res.status(200).json(recipes);
-  } else {
-    res
-      .status(404)
-      .json({ message: `No recipes found for category: ${category}` });
+    if (favourite.favourites.includes(recipeId)) {
+      res.status(400).json({ message: "Recipe is already in the favourites" });
+      return;
+    }
+
+    favourite.favourites.push(recipeId);
+
+    await favourite.save();
+
+    res.status(200).json({
+      message: "Recipe added to favourites successfully",
+      favourites: favourite.favourites,
+    });
   }
+);
+
+const removeFavouriteRecipes = async (req: Request, res: Response) => {
+  res.status(200).json({ message: "Remove recipes." });
 };
 
 export default {
-  getRecipesByCategory,
+  getFavouriteRecipes,
+  addFavouriteRecipes,
+  removeFavouriteRecipes,
 };
