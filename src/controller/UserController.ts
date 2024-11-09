@@ -16,38 +16,37 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
   const createdUser = await User.create({ email, password: hashedPassword });
 
-  res.status(201).json({
-    message: "User registered successfully",
-  });
+  if (createdUser) {
+    res.status(201).json({
+      message: "User registered successfully",
+    });
+  } else {
+    res.status(400);
+    throw new Error("User data not valid");
+  }
 });
 
 const loginUser = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { email, password } = req.body;
+    const { email, password } = req.body;
 
-      const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-      if (user && (await bcrypt.compare(password, user.password))) {
-        const accessToken = jwt.sign(
-          {
-            user: {
-              email: user.email,
-              id: user.id,
-            },
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const accessToken = jwt.sign(
+        {
+          user: {
+            email: user.email,
+            id: user.id,
           },
+        },
+        process.env.ACCESS_TOKEN_SECRET as string,
+        { expiresIn: "120m" }
+      );
 
-          process.env.ACCESS_TOKEN_SECRET as string,
-          { expiresIn: "120m" }
-        );
-
-        res.status(200).json({ accessToken });
-      } else {
-        res.status(401).json({ message: "Email or password not correct." });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error logging in user" });
+      res.status(200).json({ accessToken });
+    } else {
+      res.status(401).json({ message: "Email or password not correct." });
     }
   }
 );

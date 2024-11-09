@@ -3,10 +3,8 @@ import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/dbConnection";
 import UserRoutes from "./routes/UserRoutes";
-import MyRestaurantRoutes from "./routes/MyRestaurantRoutes";
+import CategoryRoutes from "./routes/CategoryRoutes";
 import { v2 as cloudinary } from "cloudinary";
-import RestaurantRoutes from "./routes/RestaurantRoutes";
-import OrderRoutes from "./routes/OrderRoutes";
 
 //create app
 const app = express();
@@ -25,6 +23,8 @@ app.get("/health", async (req: Request, res: Response) => {
 });
 
 app.use("/api/user", UserRoutes);
+
+app.use("/api/category", CategoryRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
