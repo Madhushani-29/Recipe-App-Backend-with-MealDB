@@ -14,4 +14,4 @@
 /npm-debug.log
 
 #ignore dist files
-/dist
+#/dist
