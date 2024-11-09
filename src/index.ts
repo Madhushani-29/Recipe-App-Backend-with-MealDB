@@ -4,7 +4,7 @@ import "dotenv/config";
 import connectDB from "./config/dbConnection";
 import UserRoutes from "./routes/UserRoutes";
 import CategoryRoutes from "./routes/CategoryRoutes";
-import { v2 as cloudinary } from "cloudinary";
+import RecipeRoutes from "./routes/RecipeRoutes";
 
 //create app
 const app = express();
@@ -25,6 +25,8 @@ app.get("/health", async (req: Request, res: Response) => {
 app.use("/api/user", UserRoutes);
 
 app.use("/api/category", CategoryRoutes);
+
+app.use("/api/recipes", RecipeRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
