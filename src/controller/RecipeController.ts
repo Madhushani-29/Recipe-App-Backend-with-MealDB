@@ -37,9 +37,38 @@ const addFavouriteRecipes = asyncHandler(
   }
 );
 
-const removeFavouriteRecipes = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "Remove recipes." });
-};
+const removeFavouriteRecipes = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const { recipeId } = req.body;
+    const userId = req.userID;
+
+    const favourite = await Favourites.findOne({ userId });
+
+    if (!favourite) {
+      res.status(404).json({
+        message: "User's favourites not found",
+      });
+      return;
+    }
+
+    const recipeIndex = favourite.favourites.indexOf(recipeId);
+    if (recipeIndex === -1) {
+      res.status(400).json({
+        message: "Recipe not found in favourites",
+      });
+      return;
+    }
+
+    favourite.favourites.splice(recipeIndex, 1);
+
+    await favourite.save();
+
+    res.status(200).json({
+      message: "Recipe removed from favourites successfully",
+      favourites: favourite.favourites,
+    });
+  }
+);
 
 export default {
   getFavouriteRecipes,
