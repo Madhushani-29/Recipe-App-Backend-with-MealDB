@@ -13,6 +13,21 @@ const port = process.env.PORT || 3001;
 
 connectDB();
 
+app.use((req, res, next) => {
+  const allowedOrigins = ["http://localhost:5173"];
+  
+  if (allowedOrigins.includes(req.headers.origin)) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+  }
+
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  next();
+});
+
 app.use(cors());
 
 app.use(express.json());
