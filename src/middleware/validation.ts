@@ -29,13 +29,13 @@ export const validateRegisterUserRequest = [
   body("firstName")
     .notEmpty()
     .withMessage("First name is required.")
-    .matches(/^[A-Za-z\s]+$/)
+    .isString()
     .withMessage("First name should only contain letters and spaces."),
 
   body("lastName")
     .notEmpty()
     .withMessage("Last name is required.")
-    .matches(/^[A-Za-z\s]+$/)
+    .isString()
     .withMessage("Last name should only contain letters and spaces."),
   body("phone")
     .notEmpty()
