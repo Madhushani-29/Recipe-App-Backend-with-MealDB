@@ -29,13 +29,13 @@ export const validateRegisterUserRequest = [
   body("firstName")
     .notEmpty()
     .withMessage("First name is required.")
-    .isString()
+    .isAlpha()
     .withMessage("First name should only contain letters and spaces."),
 
   body("lastName")
     .notEmpty()
     .withMessage("Last name is required.")
-    .isString()
+    .isAlpha()
     .withMessage("Last name should only contain letters and spaces."),
   body("phone")
     .notEmpty()
