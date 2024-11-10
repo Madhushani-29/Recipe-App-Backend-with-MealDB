@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import Favourites from "../models/favourites";
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName, phone } = req.body;
 
   const userAvailable = await User.findOne({ email });
   if (userAvailable) {
@@ -15,7 +15,13 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const createdUser = await User.create({ email, password: hashedPassword });
+  const createdUser = await User.create({
+    email,
+    password: hashedPassword,
+    firstName,
+    lastName,
+    phone,
+  });
 
   if (createdUser) {
     await Favourites.create({

@@ -18,13 +18,19 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const favourites_1 = __importDefault(require("../models/favourites"));
 const registerUser = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName, phone } = req.body;
     const userAvailable = yield user_1.default.findOne({ email });
     if (userAvailable) {
         res.status(400).json({ message: "User already registered." });
     }
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
-    const createdUser = yield user_1.default.create({ email, password: hashedPassword });
+    const createdUser = yield user_1.default.create({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        phone,
+    });
     if (createdUser) {
         yield favourites_1.default.create({
             userId: createdUser._id,
