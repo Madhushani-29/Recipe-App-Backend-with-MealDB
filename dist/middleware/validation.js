@@ -23,24 +23,30 @@ exports.validateRegisterUserRequest = [
     (0, express_validator_1.body)("email")
         .isEmail()
         .withMessage("Please enter a valid email address.")
-        .normalizeEmail(),
+        .normalizeEmail()
+        .notEmpty()
+        .withMessage("Email is required."),
     (0, express_validator_1.body)("password")
         .notEmpty()
         .withMessage("Password is required.")
         .isLength({ min: 6 })
         .withMessage("Password must be at least 6 characters long."),
     (0, express_validator_1.body)("firstName")
-        .optional()
+        .notEmpty()
+        .withMessage("First name is required.")
         .isAlpha()
         .withMessage("First name should only contain letters."),
     (0, express_validator_1.body)("lastName")
-        .optional()
+        .notEmpty()
+        .withMessage("Last name is required.")
         .isAlpha()
         .withMessage("Last name should only contain letters."),
     (0, express_validator_1.body)("phone")
-        .optional()
+        .notEmpty()
+        .withMessage("Phone number is required.")
         .matches(/^07\d{8}$/)
         .withMessage("Phone number must be a valid Sri Lankan number starting with 07 and followed by 8 digits."),
+    handleValidationErrors,
 ];
 // array contains a list of middleware functions used to validate the request body fields
 exports.validateLoginUserRequest = [
