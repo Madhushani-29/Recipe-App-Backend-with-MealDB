@@ -35,12 +35,12 @@ exports.validateRegisterUserRequest = [
         .notEmpty()
         .withMessage("First name is required.")
         .isAlpha()
-        .withMessage("First name should only contain letters."),
+        .withMessage("First name should only contain letters and spaces."),
     (0, express_validator_1.body)("lastName")
         .notEmpty()
         .withMessage("Last name is required.")
         .isAlpha()
-        .withMessage("Last name should only contain letters."),
+        .withMessage("Last name should only contain letters and spaces."),
     (0, express_validator_1.body)("phone")
         .notEmpty()
         .withMessage("Phone number is required.")

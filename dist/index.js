@@ -23,6 +23,18 @@ const CategoryRoutes_1 = __importDefault(require("./routes/CategoryRoutes"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3001;
 (0, dbConnection_1.default)();
+app.use((req, res, next) => {
+    const allowedOrigins = ["http://localhost:5173", "https://recipe-app-frontend-with-meal-db.vercel.app/"];
+    if (allowedOrigins.includes(req.headers.origin)) {
+        res.header("Access-Control-Allow-Origin", req.headers.origin);
+    }
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+    next();
+});
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 //use to test the deployment success or not
