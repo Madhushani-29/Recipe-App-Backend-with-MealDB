@@ -14,7 +14,8 @@ const getAllCategories = asyncHandler(
         .json({ message: "Failed to fetch categories from the API" });
     }
 
-    const categories = response.data.categories.slice(0, 5);
+    // only get category name
+    const categories = response.data.categories.slice(0, 5).map(category => category.strCategory);
     res.status(200).json({ categories: categories });
   }
 );
