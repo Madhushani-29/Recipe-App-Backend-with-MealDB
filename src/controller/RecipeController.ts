@@ -42,6 +42,7 @@ const getFavouriteRecipes = asyncHandler(
           strMeal: meal.strMeal,
           strMealThumb: meal.strMealThumb,
           idMeal: meal.idMeal,
+          strCategory: meal.strCategory,
         };
       });
 

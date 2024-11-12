@@ -42,6 +42,7 @@ const getFavouriteRecipes = (0, express_async_handler_1.default)((req, res) => _
                 strMeal: meal.strMeal,
                 strMealThumb: meal.strMealThumb,
                 idMeal: meal.idMeal,
+                strCategory: meal.strCategory,
             };
         });
         res.status(200).json({
