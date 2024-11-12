@@ -22,7 +22,9 @@ const getAllCategories = (0, express_async_handler_1.default)((req, res) => __aw
             .json({ message: "Failed to fetch categories from the API" });
     }
     // only get category name
-    const categories = response.data.categories.slice(0, 5).map(category => category.strCategory);
+    const categories = response.data.categories.map((category) => category.strCategory);
+    // only 5 categories
+    // const categories = response.data.categories.slice(0, 5).map(category => category.strCategory);
     res.status(200).json({ categories: categories });
 }));
 const getRecipesByCategory = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -15,7 +15,13 @@ const getAllCategories = asyncHandler(
     }
 
     // only get category name
-    const categories = response.data.categories.slice(0, 5).map(category => category.strCategory);
+    const categories = response.data.categories.map(
+      (category) => category.strCategory
+    );
+
+    // only 5 categories
+    // const categories = response.data.categories.slice(0, 5).map(category => category.strCategory);
+
     res.status(200).json({ categories: categories });
   }
 );
